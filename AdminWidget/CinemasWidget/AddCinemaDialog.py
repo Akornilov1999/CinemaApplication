@@ -1,0 +1,48 @@
+from PyQt5 import QtWidgets
+
+class AddCinemaDialog(QtWidgets.QDialog):
+
+    def __init__(self, listOfCities, *args, **kwargs):
+        super(AddCinemaDialog, self).__init__(*args, **kwargs)
+        self.setFixedHeight(225)
+        self.setFixedWidth(400)
+        self.setWindowTitle('Добавление кинотеатра')
+        self.label = QtWidgets.QLabel('Улица')
+        self.label1 = QtWidgets.QLabel('Город')
+        self.vBoxLayout = QtWidgets.QVBoxLayout()
+        self.vBoxLayout.addWidget(self.label)
+        self.vBoxLayout.addWidget(self.label1)
+        self.widgetWithLabes = QtWidgets.QWidget()
+        self.widgetWithLabes.setLayout(self.vBoxLayout)
+        self.lineEdit = QtWidgets.QLineEdit()
+        self.listOfCities = QtWidgets.QComboBox()
+        for i in range(len(listOfCities)):
+            self.listOfCities.addItem(listOfCities[i][1])
+            self.listOfCities.setItemData(i, listOfCities[i][0], 1)
+        self.vBoxLayout1 = QtWidgets.QVBoxLayout()
+        self.vBoxLayout1.addWidget(self.lineEdit)
+        self.vBoxLayout1.addWidget(self.listOfCities)
+        self.widgetWithData = QtWidgets.QWidget()
+        self.widgetWithData.setLayout(self.vBoxLayout1)
+        self.hBoxLayout = QtWidgets.QHBoxLayout()
+        self.hBoxLayout.addWidget(self.widgetWithLabes)
+        self.hBoxLayout.addWidget(self.widgetWithData)
+        self.widgetWithTypesOfHall = QtWidgets.QWidget()
+        self.widgetWithTypesOfHall.setLayout(self.hBoxLayout)
+        self.addButton = QtWidgets.QPushButton('Добавить')
+        self.addButton.clicked.connect(self.addButtonClicked)
+        self.cancelButton = QtWidgets.QPushButton('Отменить')
+        self.cancelButton.clicked.connect(self.close)
+        self.hBoxLayout1 = QtWidgets.QHBoxLayout()
+        self.hBoxLayout1.addWidget(self.addButton)
+        self.hBoxLayout1.addWidget(self.cancelButton)
+        self.widgetWithButtons = QtWidgets.QWidget()
+        self.widgetWithButtons.setLayout(self.hBoxLayout1)
+        self.vBoxLayout2 = QtWidgets.QVBoxLayout()
+        self.vBoxLayout2.addWidget(self.widgetWithTypesOfHall)
+        self.vBoxLayout2.addWidget(self.widgetWithButtons)
+        self.setLayout(self.vBoxLayout2)
+
+    def addButtonClicked(self):
+        self.lineEdit.setEnabled(False)
+        self.close()
